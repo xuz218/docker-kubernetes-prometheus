@@ -1,0 +1,20 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: alertmanager-config
+  namespace: monitoring
+data:
+  config.yml: |-
+    global:
+    templates:
+    - '/etc/alertmanager/*.tmpl'
+    route:
+      groupBy: ['job']
+      groupWait: 30s
+      groupInterval: 1m
+      repeatInterval: 2m
+      receiver: 'webhook'
+    receivers:
+    - name: 'webhook'
+      webhookConfigs:
+      - url: 'https://hooks.slack.com/services/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'
